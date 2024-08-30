@@ -41,10 +41,10 @@ type User {
     updated_at: DateTime!
 }
 
-# extend type Query {
-#     videos: [Video!]! @all
-#     video(id: ID! @eq): Video @find
-# }
+extend type Query {
+    videos: [Video!]! @all
+    video(id: ID! @eq): Video @find
+}
 
 type Mutation {
     uploadVideo(title: String, file: Upload): Video

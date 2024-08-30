@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>Danh sách Video</title>
-    
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/plyr@3.6.8/dist/plyr.css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 <body class="antialiased">
     <div class="container mx-auto mt-16">
         <h1 class="text-3xl font-semibold text-center mb-8">Danh sách Video</h1>
-        
+
         @if($videos->isEmpty())
         <p class="text-center">Không có video nào.</p>
         @else
@@ -32,7 +32,7 @@
             <div class="col-md-4 mb-4">
                 <div class="bg-white rounded-lg shadow-md p-4">
                     <video id="video_{{ $video->id }}" class="plyr" controls>
-                        <source src="{{ Storage::url($video->hls_url) }}" type="application/x-mpegURL">
+                        <source src="{{ $video->hls_url }}" type="application/x-mpegURL">
                     </video>
                     <h2 class="text-xl font-semibold mt-4">{{ $video->title }}</h2>
                     <p class="text-gray-600">{{ $video->created_at->format('d/m/Y H:i') }}</p>
@@ -42,7 +42,7 @@
         </div>
         @endif
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             @foreach($videos as $video)
@@ -53,7 +53,7 @@
                 hls.attachMedia(video_{{ $video->id }});
                 hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
                     const availableQualities = hls.levels.map((l) => l.height);
-                    
+
                     const player = new Plyr(video_{{ $video->id }}, {
                         quality: {
                             default: availableQualities[0],

@@ -44,7 +44,7 @@ class SegmentVideoJob implements ShouldQueue
                 ->exportForHLS()
                 ->setSegmentLength(10)
                 ->setKeyFrameInterval(48);
-                
+
             // Thêm các độ phân giải khác nhau
             $export->addFormat((new X264('aac'))->setKiloBitrate(500), function ($media) {
                 $media->scale(426, 240);
@@ -59,7 +59,7 @@ class SegmentVideoJob implements ShouldQueue
             })->toDisk('local')->save($outputDir . '/' . $playlistName);
 
             $this->setFolderPermissions(storage_path('app/' . $outputDir));
-            $this->video->hls_url = $outputDir . '/' . $playlistName;
+            $this->video->hls_url = Storage::disk('public')->url($outputDir . '/' . $playlistName);
             $this->video->save();
 
             // Xóa video gốc sau khi phân giải xong
