@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1' # Hoặc phiên bản PHP bạn cần
+          coverage: none
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Install Composer dependencies
+        run: |
+          composer update # Chạy update để cập nhật các phụ thuộc
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      # Các bước khác nếu có (ví dụ như chạy PHPUnit, PHPStan, hoặc các công cụ khác)
