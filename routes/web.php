@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [VideoControler::class, 'index']);
+// Route::get('/', [VideoControler::class, 'index']);
